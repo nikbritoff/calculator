@@ -11,7 +11,6 @@ type CalculatiorContextType = {
   handleOperationClick: (value: Operator) => void,
   handleResultClick: () => void,
   handleClearClick: (type: Clear) => void,
-  displayInfo: number | string,
 };
 
 type CalculatorProviderProps = {
@@ -26,9 +25,6 @@ export const CalculatorProvider = ({ children }: CalculatorProviderProps ) => {
   const [ firstOperand, setFirstOperand ] = useState<number | string>('');
   const [ secondOperand, setSecondOperand ] = useState<number | string>('');
   const [ operation, setOperation ] = useState<Operator>(null);
-  // <!!!!!!>
-  const [ displayInfo, setDisplayInfo ] = useState<number | string>('');
-  // <!!!!!!>
 
   const handleNumberClick = (operand: KeyNumberType) => {
     if (String(secondOperand).length >= MAX_OPERAND_LENGTH ) {
@@ -74,7 +70,6 @@ export const CalculatorProvider = ({ children }: CalculatorProviderProps ) => {
         break;
       case '*':
         setFirstOperand(Number(firstOperand) * Number(secondOperand));
-        console.log(firstOperand);
         break;
       case '/':
         setFirstOperand(Number(firstOperand) / Number(secondOperand));
@@ -84,19 +79,11 @@ export const CalculatorProvider = ({ children }: CalculatorProviderProps ) => {
         break;
 
       default:
-        console.log('default');
         return;
     };
 
     setSecondOperand('');
     setOperation(null);
-    // <!!!!!!> 
-    // Почему эта функция не выполняется сразу? - стейт обновляется асинхронно, вот почему!
-    setDisplayInfo(() => {
-      console.log('display', firstOperand);
-      return String(firstOperand);
-    });
-    // <!!!!!>
   };
 
   const handleClearClick = (type : Clear) => {
@@ -126,7 +113,6 @@ export const CalculatorProvider = ({ children }: CalculatorProviderProps ) => {
         handleOperationClick,
         handleResultClick,
         handleClearClick,
-        displayInfo,
       }}
     >
       {children}

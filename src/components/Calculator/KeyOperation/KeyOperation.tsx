@@ -24,11 +24,10 @@ const StyledKey = styled.button`
 `;
 
 export const KeyOperator =  ({ value }: KeyOperatorProps): JSX.Element => {
-  const { handleOperationClick, firstOperand, secondOperand } = useCalculatorContext();
+  const { handleOperationClick } = useCalculatorContext();
 
   return (
     <StyledKey onClick={() => {
-      console.log(value, firstOperand, secondOperand);
       handleOperationClick(value);
     }}>{value}</StyledKey>
   );

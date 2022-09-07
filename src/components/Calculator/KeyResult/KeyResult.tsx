@@ -4,7 +4,7 @@ import { Colors, borderRadius } from '../../../styles/const';
 
 const StyledKey = styled.button`
   color: ${Colors.Display};
-  background-color: ${Colors.Key};
+  background-color: ${Colors.Accent};
   border: 2px solid ${Colors.Border};
 
   font-size: 32px;

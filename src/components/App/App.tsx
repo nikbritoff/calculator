@@ -17,7 +17,6 @@ export const App = (): JSX.Element => {
       <CalculatorProvider>
         <Calculator />     
       </CalculatorProvider>
-      {/* <Calculator /> */}
     </StyledDiv>
   );
 };

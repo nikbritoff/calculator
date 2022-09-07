@@ -27,6 +27,16 @@ export const CalculatorProvider = ({ children }: CalculatorProviderProps ) => {
   const [ operation, setOperation ] = useState<Operator>(null);
 
   const handleNumberClick = (operand: KeyNumberType) => {
+    if (String(secondOperand) === '0' && operand === '.') {
+      setSecondOperand((prev) => String(prev) + String(operand));
+      return;
+    }
+
+    if (String(secondOperand) === '0' && operand !== '.') {
+      setSecondOperand(operand);
+      return;
+    }
+
     if (String(secondOperand).length >= MAX_OPERAND_LENGTH ) {
       return;
     }
@@ -61,6 +71,12 @@ export const CalculatorProvider = ({ children }: CalculatorProviderProps ) => {
   };
 
   const handleResultClick = () => {
+    if (!operation && firstOperand && Number(secondOperand) < 0) {
+      setFirstOperand(Number(firstOperand) + Number(secondOperand));
+      setSecondOperand('');
+      return;
+    }
+
     switch(operation) {
       case '+':
         setFirstOperand(Number(firstOperand) + Number(secondOperand));

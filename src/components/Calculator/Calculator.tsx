@@ -6,6 +6,8 @@ import { Display } from './Display/Display';
 import { KeyResult } from './KeyResult/KeyResult';
 import { Clear } from '../../const/clear';
 import { KeyClear } from './KeyClear/KeyClear';
+import { useEffect } from 'react';
+import { useCalculatorContext } from '../../context/CalculatiorContext';
 
 const StyledCase = styled.div`
   display: grid;
@@ -20,6 +22,59 @@ const StyledCase = styled.div`
 `;
 
 export const Calculator = (): JSX.Element => {
+  const {
+    handleNumberClick,
+    handleOperationClick,
+    handleResultClick,
+    handleClearClick,
+  } = useCalculatorContext();
+
+  const handleButtonKeydown = (evt: KeyboardEvent) => {
+    switch (evt.key) {
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+      case '0':
+      case '.':
+        handleNumberClick(evt.key);
+        break;
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        handleOperationClick(evt.key);
+        break;
+      case '=':
+      case 'Enter':
+        handleResultClick();
+        break;
+      case 'Backspace':
+        handleClearClick(Clear.Last);
+        break;
+      case 'Delete':
+        handleClearClick(Clear.Input);
+        break;
+      case 'C':
+      case 'c':
+        handleClearClick(Clear.All);
+        break;
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleButtonKeydown);
+    
+    return () => {
+      document.removeEventListener('keydown', handleButtonKeydown);
+    }
+  });
+
   return (
     <StyledCase>
       <Display />
